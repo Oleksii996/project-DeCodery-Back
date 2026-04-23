@@ -1,5 +1,5 @@
 {
-  "name": "leleka_project-04_backend",
+  "name": "project-decodery-back",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Oleksii996/leleka_project-04_backend.git"
+    "url": "git+https://github.com/Oleksii996/project-DeCodery-Back"
   },
   "keywords": [],
   "author": "oleksii_ponomarenko <alexponomarenko996@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Oleksii996/leleka_project-04_backend/issues"
+    "url": "https://github.com/Oleksii996/project-DeCodery-Back"
   },
-  "homepage": "https://github.com/Oleksii996/leleka_project-04_backend#readme",
+  "homepage": "https://github.com/Oleksii996/project-DeCodery-Back#readme",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "celebrate": "^15.0.3",

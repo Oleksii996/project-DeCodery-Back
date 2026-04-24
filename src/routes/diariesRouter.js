@@ -6,34 +6,28 @@ import {
   getDiaryByIdValidationSchema,
   updateDiaryValidationSchema,
 } from '../validations/diaryValidation.js';
-import {
-  createDiary,
-  deleteDiary,
-  getAllDiaries,
-  getDiaryById,
-  updateDiary,
-} from '../controllers/diaries/diariesControllers.js';
+import { diary as ctrl } from '../controllers/index.js';
 const diariesRouter = Router();
-diariesRouter.use('/diaries', authenticate);
-diariesRouter.get('/diaries', getAllDiaries);
+diariesRouter.use('/', authenticate);
+diariesRouter.get('/', ctrl.getAllDiaries);
 diariesRouter.get(
-  '/diaries/:diaryId',
+  '/:diaryId',
   celebrate(getDiaryByIdValidationSchema),
-  getDiaryById,
+  ctrl.getDiaryById,
 );
 diariesRouter.post(
-  '/diaries',
+  '/',
   celebrate(createDiaryValidationSchema),
-  createDiary,
+  ctrl.createDiary,
 );
 diariesRouter.patch(
-  '/diaries/:diaryId',
+  '/:diaryId',
   celebrate(updateDiaryValidationSchema),
-  updateDiary,
+  ctrl.updateDiary,
 );
 diariesRouter.delete(
-  '/diaries/:diaryId',
+  '/:diaryId',
   celebrate(deleteDiaryValidationSchema),
-  deleteDiary,
+  ctrl.deleteDiary,
 );
 export default diariesRouter;

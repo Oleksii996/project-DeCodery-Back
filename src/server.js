@@ -4,7 +4,7 @@ import helmet from "helmet";
 
 import "dotenv/config";
 import cookieParser from "cookie-parser";
-import "dotenv/config";
+
 import { errors } from "celebrate";
 import { connectMongoDB } from "./db/connectMongoDB.js";
 import { notFoundHandler } from "./middleware/notFoundHandler.js";

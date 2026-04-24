@@ -4,7 +4,7 @@ import helmet from "helmet";
 
 import "dotenv/config";
 import cookieParser from "cookie-parser";
-
+import "dotenv/config";
 import { errors } from "celebrate";
 import { connectMongoDB } from "./db/connectMongoDB.js";
 import { notFoundHandler } from "./middleware/notFoundHandler.js";
@@ -25,6 +25,7 @@ app.use(express.json({ limit: "5mb" }));
 app.use(cors({ methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"] }));
 app.use(helmet());
 app.use(cookieParser());
+await connectMongoDB();
 
 // Роутери
 app.use("/api/auth", authRouter);

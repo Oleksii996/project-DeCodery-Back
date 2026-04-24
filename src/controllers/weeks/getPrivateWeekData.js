@@ -5,7 +5,7 @@ export const getPrivateWeekData = (req, res) => {
     dueDate: "2026-10-01"
   };
 
-  const daysToBirth = 140;
+  const daysToBirth = Math.max(0, 280 - user.currentWeek * 7);
 
   const data = {
     week: user.currentWeek,

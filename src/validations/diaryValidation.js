@@ -33,8 +33,7 @@ export const updateDiaryValidationSchema = {
     emotions: Joi.array()
       .items(Joi.string().custom(objectIdValidator))
       .min(1)
-      .max(12)
-      .required(),
+      .max(12),
   }).min(1),
 };
 export const deleteDiaryValidationSchema = {

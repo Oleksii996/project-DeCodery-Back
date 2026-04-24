@@ -1,12 +1,14 @@
 export const getWeekData = (req, res) => {
   const { weekNumber } = req.params;
 
-  if (isNaN(Number(weekNumber))) {
+  const weekNumberNum = Number(weekNumber);
+
+  if (isNaN(weekNumberNum) || weekNumberNum < 1 || weekNumberNum > 40) {
     return res.status(400).json({ message: "Invalid week number" });
   }
 
   const data = {
-    week: Number(weekNumber),
+    week: weekNumberNum,
     daysToBirth: 165,
     baby: {
       size: "як авокадо",

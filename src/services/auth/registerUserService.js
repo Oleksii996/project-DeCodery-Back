@@ -1,6 +1,7 @@
 import createHttpError from "http-errors";
 import { User } from "../../models/user.js";
 import bcrypt from "bcrypt";
+import { getPregnancyProgress } from "../../utils/getPregnancyProgress.js";
 
 export const registerService = async (body) => {
   const { password, ...userProps } = body;
@@ -17,5 +18,10 @@ export const registerService = async (body) => {
     ...userProps,
   });
 
-  return newUser;
+  const pregnancyProgress = getPregnancyProgress(newUser.dueDate);
+
+  return {
+    user: newUser,
+    pregnancyProgress,
+  };
 };

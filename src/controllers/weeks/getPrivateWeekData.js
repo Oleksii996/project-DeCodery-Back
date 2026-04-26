@@ -1,17 +1,10 @@
-import { getPregnancyProgress } from "../../utils/getPregnancyProgress.js";
 import { getBabyStateByWeek, getMomStateByWeek } from "../../services/weeks/getWeekState.js";
 
 export const getPrivateWeekData = async (req, res) => {
-  const { dueDate } = req.user;
+  const currentWeek = 20;
 
-  if (!dueDate) {
-    return res.status(400).json({ message: "Due date is required" });
-  }
+  const daysToBirth = Math.max(0, 280 - currentWeek * 7);
 
-  //  рахуємо тиждень і дні
-  const { currentWeek, daysToBirth } = getPregnancyProgress(dueDate);
-
-  //  беремо дані
   const baby = await getBabyStateByWeek(currentWeek);
   const mom = await getMomStateByWeek(currentWeek);
 

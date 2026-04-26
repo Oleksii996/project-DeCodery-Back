@@ -4,10 +4,13 @@ export const getWeekData = async (req, res) => {
   const { weekNumber } = req.params;
   const weekNumberNum = Number(weekNumber);
 
-  if (isNaN(weekNumberNum) || weekNumberNum < 1 || weekNumberNum > 40) {
+  // Валідація: підтримуємо до 42 тижня
+  if (isNaN(weekNumberNum) || weekNumberNum < 1 || weekNumberNum > 42) {
     return res.status(400).json({ message: "Invalid week number" });
   }
 
+  // Тимчасовий розрахунок днів до пологів
+  // TODO: замінити на getPregnancyProgress після інтеграції utils
   const daysToBirth = Math.max(0, 280 - weekNumberNum * 7);
 
   try {

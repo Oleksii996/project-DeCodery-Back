@@ -1,5 +1,5 @@
-import { getPregnancyProgress } from "../../utils/getPregnancyProgress.js";
 import { getBabyStateByWeek, getMomStateByWeek } from "../../services/weeks/getWeekState.js";
+import { getPregnancyProgress } from "../../utils/index.js";
 
 export const getPrivateWeekData = async (req, res) => {
   let currentWeek;
@@ -7,11 +7,19 @@ export const getPrivateWeekData = async (req, res) => {
 
   if (req.user && req.user.dueDate) {
     const progress = getPregnancyProgress(req.user.dueDate);
+
     currentWeek = progress.currentWeek;
-    daysToBirth = progress.daysToBirth;
+
+    // Тимчасово використовуємо daysUntilDueDate з утиліти
+    // у відповіді залишаємо поле daysToBirth для сумісності з фронтом
+    daysToBirth = progress.daysUntilDueDate;
   } else {
-    // TODO: replace fallback with real user data when auth is implemented
+    // TODO: замінити fallback після реалізації авторизації
+  // та використовувати getPregnancyProgress для реального користувача
     currentWeek = 20;
+
+    // Тимчасовий розрахунок
+    // TODO: замінити на getPregnancyProgress
     daysToBirth = Math.max(0, 280 - currentWeek * 7);
   }
 

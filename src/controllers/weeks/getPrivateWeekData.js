@@ -1,34 +1,24 @@
-export const getPrivateWeekData = (req, res) => {
-  // mock користувач
-  const user = {
-    currentWeek: 20,
-    dueDate: "2026-10-01"
-  };
+import { getPregnancyProgress } from "../../utils/getPregnancyProgress.js";
+import { getBabyStateByWeek, getMomStateByWeek } from "../../services/weeks/getWeekState.js";
 
-  const daysToBirth = Math.max(0, 280 - user.currentWeek * 7);
+export const getPrivateWeekData = async (req, res) => {
+  const { dueDate } = req.user;
 
-  const data = {
-    week: user.currentWeek,
+  if (!dueDate) {
+    return res.status(400).json({ message: "Due date is required" });
+  }
+
+  //  рахуємо тиждень і дні
+  const { currentWeek, daysToBirth } = getPregnancyProgress(dueDate);
+
+  //  беремо дані
+  const baby = await getBabyStateByWeek(currentWeek);
+  const mom = await getMomStateByWeek(currentWeek);
+
+  res.json({
+    week: currentWeek,
     daysToBirth,
-    baby: {
-      size: "як банан",
-      description:
-        "Малюк активно рухається, розвивається нервова система та слух. Він вже може реагувати на звуки.",
-      facts: [
-        "Формується режим сну та активності",
-        "Плід може чути голос мами",
-        "З’являються перші ворушіння"
-      ]
-    },
-    mom: {
-      tip: "Слідкуйте за поставою та робіть легкі фізичні вправи для спини.",
-      feelings: [
-        "можлива втома",
-        "емоційні коливання",
-        "відчуття рухів малюка"
-      ]
-    }
-  };
-
-  res.json(data);
+    baby,
+    mom,
+  });
 };

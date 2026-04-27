@@ -7,6 +7,10 @@ import {
   updateDiaryValidationSchema,
 } from '../validations/diaryValidation.js';
 import { diary as ctrl } from '../controllers/index.js';
+import { authenticate } from '../middleware/authenticate.js';
+
+
+
 const diariesRouter = Router();
 diariesRouter.use('/', authenticate);
 diariesRouter.get('/', ctrl.getAllDiaries);

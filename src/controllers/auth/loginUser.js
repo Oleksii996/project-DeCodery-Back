@@ -8,6 +8,7 @@ export const loginUser = async (req, res) => {
   const body = req.body;
 
   const { user, pregnancyProgress } = await loginService(body);
+  await Session.deleteOne({ userId: user._id });
 
   const newSession = await createSessionService(user._id);
   setSessionCookies(res, newSession);

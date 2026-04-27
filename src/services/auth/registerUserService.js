@@ -5,6 +5,7 @@ import { getPregnancyProgress } from "../../utils/getPregnancyProgress.js";
 
 export const registerService = async (body) => {
   const { password, ...userProps } = body;
+
   const user = await User.findOne({ email: body.email });
 
   if (user) {
@@ -18,10 +19,5 @@ export const registerService = async (body) => {
     ...userProps,
   });
 
-  const pregnancyProgress = getPregnancyProgress(newUser.dueDate);
-
-  return {
-    user: newUser,
-    pregnancyProgress,
-  };
+  return newUser;
 };

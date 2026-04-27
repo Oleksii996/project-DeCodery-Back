@@ -52,7 +52,7 @@ export const registerUserSchema = {
     gender: Joi.string().valid("boy", "girl").allow(null).messages({
       "any.only": "Gender must be one of: boy, girl, null",
     }),
-    dueDate: Joi.string().required().custom(validateDueDate).messages({
+    dueDate: Joi.string().custom(validateDueDate).messages({
       "string.base": "Due date must be a string",
       "any.required": "Due date is required",
       "any.invalid": "Due date must be in format YYYY-MM-DD",

@@ -9,8 +9,12 @@ const userSchema = new Schema({
     trim: true,
     required: true,
   },
-  gender: { type: String, enum: BABY_GENDER },
-  dueDate: { type: Date, required: true },
+  gender: { type: String, enum: BABY_GENDER, default: null },
+  dueDate: { type: Date, default: null },
+  isOnboardingCompleted: {
+    type: Boolean,
+    default: false,
+  },
   avatar: {
     type: String,
     default: "https://ac.goit.global/fullstack/react/default-avatar.jpg",

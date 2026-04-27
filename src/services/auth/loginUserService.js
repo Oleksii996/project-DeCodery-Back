@@ -1,6 +1,7 @@
 import createHttpError from "http-errors";
 import { User } from "../../models/user.js";
 import bcrypt from "bcrypt";
+import { getPregnancyProgress } from "../../utils/getPregnancyProgress.js";
 
 export const loginService = async (body) => {
   const { email, password } = body;
@@ -14,5 +15,10 @@ export const loginService = async (body) => {
   if (!isValidPassword) {
     throw createHttpError(401, "Invalid credentials");
   }
-  return user;
+
+  const pregnancyProgress = getPregnancyProgress(user.dueDate);
+  return {
+    user,
+    pregnancyProgress,
+  };
 };

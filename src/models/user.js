@@ -11,6 +11,10 @@ const userSchema = new Schema({
   },
   gender: { type: String, enum: BABY_GENDER },
   dueDate: { type: Date, required: true },
+  avatar: {
+    type: String,
+    default: "https://ac.goit.global/fullstack/react/default-avatar.jpg",
+  },
 });
 
 export const User = model("User", userSchema);

@@ -4,13 +4,12 @@ export const getWeekData = async (req, res) => {
   const { weekNumber } = req.params;
   const weekNumberNum = Number(weekNumber);
 
-  // Валідація: підтримуємо до 42 тижня
+  // ✅ Валідація
   if (isNaN(weekNumberNum) || weekNumberNum < 1 || weekNumberNum > 42) {
     return res.status(400).json({ message: "Invalid week number" });
   }
 
-  // Тимчасовий розрахунок днів до пологів
-  // TODO: замінити на getPregnancyProgress після інтеграції utils
+  // ✅ тимчасовий розрахунок
   const daysToBirth = Math.max(0, 280 - weekNumberNum * 7);
 
   try {
@@ -18,11 +17,29 @@ export const getWeekData = async (req, res) => {
     const mom = await getMomStateByWeek(weekNumberNum);
 
     res.json({
-      week: weekNumberNum,
+      weekNumber: weekNumberNum,
       daysToBirth,
-      baby,
-      mom,
+
+      //  BABY
+      baby: {
+        weekNumber: baby.weekNumber,
+        size: baby.size,
+        description: baby.description,
+        facts: baby.facts,
+      },
+
+      //  MOM
+      mom: {
+        weekNumber: mom.weekNumber,
+
+        // беремо перший елемент масиву
+        description: mom.feelings?.[0] || "Опис відсутній",
+
+        // беремо тільки текст tip
+        tips: mom.comfortTips?.map(item => item.tip) || [],
+      },
     });
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

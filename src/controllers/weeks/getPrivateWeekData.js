@@ -2,36 +2,39 @@ import { getBabyStateByWeek, getMomStateByWeek } from "../../services/weeks/getW
 import { getPregnancyProgress } from "../../utils/index.js";
 
 export const getPrivateWeekData = async (req, res) => {
-  let currentWeek;
-  let daysToBirth;
+  const { weekNumber } = req.params;
+  const weekNumberNum = Number(weekNumber);
+
+  // Валідація (1–42)
+  if (isNaN(weekNumberNum) || weekNumberNum < 1 || weekNumberNum > 42) {
+    return res.status(400).json({ message: "Invalid week number" });
+  }
+
+  let daysToBirth = null;
 
   if (req.user && req.user.dueDate) {
     const progress = getPregnancyProgress(req.user.dueDate);
-
-    currentWeek = progress.currentWeek;
-
-    // Тимчасово використовуємо daysUntilDueDate з утиліти
-    // у відповіді залишаємо поле daysToBirth для сумісності з фронтом
     daysToBirth = progress.daysUntilDueDate;
-  } else {
-    // TODO: замінити fallback після реалізації авторизації
-  // та використовувати getPregnancyProgress для реального користувача
-    currentWeek = 20;
-
-    // Тимчасовий розрахунок
-    // TODO: замінити на getPregnancyProgress
-    daysToBirth = Math.max(0, 280 - currentWeek * 7);
   }
 
   try {
-    const baby = await getBabyStateByWeek(currentWeek);
-    const mom = await getMomStateByWeek(currentWeek);
+    const baby = await getBabyStateByWeek(weekNumberNum);
+    const mom = await getMomStateByWeek(weekNumberNum);
 
     res.json({
-      week: currentWeek,
+      weekNumber: weekNumberNum,
       daysToBirth,
-      baby,
-      mom,
+      baby: {
+        weekNumber: baby.weekNumber,
+        size: baby.size,
+        description: baby.description,
+        facts: baby.facts,
+      },
+      mom: {
+        weekNumber: mom.weekNumber,
+        description: mom.description,
+        tips: mom.tips || mom.feelings,
+      },
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

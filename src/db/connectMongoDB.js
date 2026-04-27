@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+const mongoURL = process.env.MONGO_URL;
 
 export const connectMongoDB = async () => {
   const mongoURL = process.env.MONGO_URL || "mongodb://localhost:27017/decodery";

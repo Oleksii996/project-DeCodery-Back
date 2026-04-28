@@ -1,3 +1,6 @@
 export const getCurrentUser = async (req, res) => {
-  res.json(req.user);
+  const currentUser =
+    typeof req.user?.toObject === "function" ? req.user.toObject() : req.user;
+
+  res.json(currentUser);
 };

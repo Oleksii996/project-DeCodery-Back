@@ -1,5 +1,8 @@
 import jwt from "jsonwebtoken";
 
+/**
+ * Middleware для перевірки токена та ролі користувача
+ */
 export const authThema = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
@@ -13,13 +16,12 @@ export const authThema = (req, res, next) => {
       return res.status(403).json({ message: "Недійсний токен" });
     }
 
-    // Додаткова логіка саме для теми
-    // Наприклад, перевірка ролі користувача
+    // Перевірка ролі користувача
     if (!user || !user.role || user.role !== "user") {
       return res.status(403).json({ message: "Доступ до теми заборонено" });
     }
 
-    req.user = user;
+    req.user = user; // додаємо дані користувача в req
     next();
   });
 };

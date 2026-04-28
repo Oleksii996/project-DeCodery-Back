@@ -5,7 +5,6 @@ export const getPrivateWeekData = async (req, res) => {
   const { weekNumber } = req.params;
   const weekNumberNum = Number(weekNumber);
 
-  // Валідація (1–42)
   if (isNaN(weekNumberNum) || weekNumberNum < 1 || weekNumberNum > 42) {
     return res.status(400).json({ message: "Invalid week number" });
   }
@@ -32,8 +31,8 @@ export const getPrivateWeekData = async (req, res) => {
       },
       mom: {
         weekNumber: mom.weekNumber,
-        description: mom.description,
-        tips: mom.tips || mom.feelings,
+        description: mom.feelings?.[0] || "Опис відсутній",
+        tips: mom.comfortTips?.map(item => item.tip) || [],
       },
     });
   } catch (error) {

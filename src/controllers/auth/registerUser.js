@@ -1,16 +1,21 @@
 import {
   createSessionService,
   setSessionCookies,
-} from "../../services/auth/SessionService.js";
-import { registerService } from "../../services/auth/registerUserService.js";
+} from '../../services/auth/SessionService.js';
+import { registerService } from '../../services/auth/registerUserService.js';
 
 export const registerUser = async (req, res) => {
   const body = req.body;
-  const { user, pregnancyProgress } = await registerService(body);
-  console.log(user);
+
+  const user = await registerService(body);
 
   const newSession = await createSessionService(user._id);
   setSessionCookies(res, newSession);
 
-  return res.status(201).json({ user, pregnancyProgress });
+  const userWithoutPassword = user.toObject();
+  delete userWithoutPassword.password;
+
+  return res.status(201).json({
+    user: userWithoutPassword,
+  });
 };

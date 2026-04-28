@@ -15,11 +15,11 @@ authRouter.post(
   controller.registerUser,
 );
 
+// login
 authRouter.post('/login', celebrate(loginUserSchema), controller.loginUser);
-
-// 🔐 logout без валідації body (все з cookies)
+// logout
 authRouter.post('/logout', controller.logoutUser);
-
+// refresh
 authRouter.post('/refresh', controller.refreshController);
 
 export default authRouter;

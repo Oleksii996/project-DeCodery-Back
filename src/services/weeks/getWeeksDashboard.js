@@ -1,5 +1,5 @@
 import createHttpError from "http-errors";
-import { babyStateModel } from "../../models/baby_state.js";
+import { BabyStateModel } from "../../models/baby_state.js";
 import { getDashboardPregnancyProgress } from "../../utils/getDashboardPregnancyProgress.js";
 
 const LAST_WEEK = 40;
@@ -13,7 +13,7 @@ export const getPublicWeeksDashboardData = async () => {
   const currentWeek = DEFAULT_PUBLIC_WEEK;
   const daysUntilDueDate = getPublicDaysUntilDueDate();
 
-  const babyState = await babyStateModel.findOne({ weekNumber: currentWeek }).lean();
+  const babyState = await BabyStateModel.findOne({ weekNumber: currentWeek }).lean();
 
   if (!babyState) {
     throw createHttpError(

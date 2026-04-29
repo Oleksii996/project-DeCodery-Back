@@ -1,20 +1,21 @@
-import { randomUUID } from "crypto";
-import jwt from "jsonwebtoken";
-
-const JWT_SECRET = process.env.JWT_SECRET || "dev-secret-change-me";
+import {
+  createSessionService,
+  setSessionCookies,
+} from '../../services/auth/SessionService.js';
+import { registerService } from '../../services/auth/registerUserService.js';
 
 export const registerUser = async (req, res) => {
-  const { name, email, gender = null, dueDate } = req.body;
+  const body = req.body;
 
-  const user = {
-    id: randomUUID(),
-    name,
-    email,
-    gender,
-    dueDate,
-  };
+  const user = await registerService(body);
 
-  const token = jwt.sign(user, JWT_SECRET, { expiresIn: "7d" });
+  const newSession = await createSessionService(user._id);
+  setSessionCookies(res, newSession);
 
-  res.status(201).json({ user, token });
+  const userWithoutPassword = user.toObject();
+  delete userWithoutPassword.password;
+
+  return res.status(201).json({
+    user: userWithoutPassword,
+  });
 };

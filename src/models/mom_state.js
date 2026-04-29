@@ -20,4 +20,4 @@ const momStateSchema = new Schema(
   },
 );
 
-export const momStateModel = model("mom_state", momStateSchema);
+export const MomStateModel = model("mom_state", momStateSchema);

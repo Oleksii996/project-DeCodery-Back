@@ -10,8 +10,8 @@ import {
 } from "../controllers/weeks/weeksController.js";
 
 const weeksRouter = Router();
-weeksRouter.get("/public", getPublicWeeksController);
-weeksRouter.get("/private", authenticate, getPrivateWeeksController);
+weeksRouter.get("/", getPublicWeeksController);
+weeksRouter.get("/me", authenticate, getPrivateWeeksController);
 weeksRouter.get("/baby", authenticate, getBabyStateController);
 weeksRouter.get("/mom", authenticate, getMomStateController);
 export default weeksRouter;

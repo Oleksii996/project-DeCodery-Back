@@ -12,8 +12,10 @@ import {
 const weeksRouter = Router();
 
 
-weeksRouter.get("/:weekNumber", getWeekData);
 weeksRouter.get("/private/:weekNumber", authenticate, getPrivateWeekData);
+
+weeksRouter.get("/:weekNumber", getWeekData);
+
 
 weeksRouter.get("/baby", authenticate, getBabyStateController);
 weeksRouter.get("/mom", authenticate, getMomStateController);

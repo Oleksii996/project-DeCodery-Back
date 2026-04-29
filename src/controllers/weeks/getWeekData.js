@@ -1,10 +1,9 @@
 import { getBabyStateByWeek, getMomStateByWeek } from "../../services/weeks/getWeekState.js";
 
 export const getWeekData = async (req, res) => {
-  //  по ТЗ: для НЕ залогіненого завжди 1 тиждень
+ 
   const weekNumberNum = 1;
 
-  //  273 дні до пологів
   const daysToBirth = 273;
 
   try {
@@ -28,7 +27,7 @@ export const getWeekData = async (req, res) => {
         weekNumber: mom.weekNumber,
         description: mom.feelings?.sensationDescr || "Опис відсутній",
 
-        //  ВАЖЛИВО: беремо з baby_state
+        //   беремо з baby_state
         tips: Array.isArray(baby.momDailyTips)
           ? baby.momDailyTips
           : [],

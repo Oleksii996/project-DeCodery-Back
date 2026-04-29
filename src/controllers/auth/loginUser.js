@@ -1,19 +1,21 @@
-import jwt from "jsonwebtoken";
-
-const JWT_SECRET = process.env.JWT_SECRET || "dev-secret-change-me";
+import { Session } from '../../models/session.js';
+import { loginService } from '../../services/auth/loginUserService.js';
+import {
+  createSessionService,
+  setSessionCookies,
+} from '../../services/auth/SessionService.js';
 
 export const loginUser = async (req, res) => {
-  const { email } = req.body;
+  const body = req.body;
 
-  const user = {
-    id: "demo-user-id",
-    name: "Demo User",
-    email,
-    gender: null,
-    dueDate: null,
-  };
+  const { user, pregnancyProgress } = await loginService(body);
+  await Session.deleteOne({ userId: user._id });
 
-  const token = jwt.sign(user, JWT_SECRET, { expiresIn: "7d" });
+  const newSession = await createSessionService(user._id);
+  setSessionCookies(res, newSession);
 
-  res.json({ user, token });
+  return res.status(201).json({
+    user,
+    pregnancyProgress,
+  });
 };

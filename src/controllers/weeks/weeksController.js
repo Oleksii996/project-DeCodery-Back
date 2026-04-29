@@ -1,47 +1,55 @@
-import createHttpError from "http-errors";
+
 import { getPregnancyProgress } from "../../utils/getPregnancyProgress.js";
-import { getBabyStateByWeek } from "../../services/weeks/getWeekState.js";
-import { getMomStateByWeek } from "../../services/weeks/getWeekState.js";
+import { getPublicWeeksDashboardData, getPrivateWeeksDashboardData } from '../services/getWeeksDashboard.js';
+import { getBabyStateByWeek, getMomStateByWeek } from '../services/getWeekState.js';
+import { getPregnancyProgress } from '../utils/getPregnancyProgress.js';
 
-export const getBabyStateController = async (req, res) => {
-  const { dueDate } = req.user;
 
-  if (!dueDate) {
-    throw createHttpError(400, "Due date is required");
+export const getPublicWeeksController = async (req, res, next) => {
+  try {
+    const data = await getPublicWeeksDashboardData();
+    res.status(200).json({
+      status: 200,
+      message: "Public dashboard data fetched successfully",
+      data,
+    });
+  } catch (error) {
+    next(error);
   }
-
-  const { currentWeek } = getPregnancyProgress(dueDate);
-
-  if (!currentWeek || currentWeek < 1 || currentWeek > 42) {
-    throw createHttpError(400, "Invalid pregnancy week");
-  }
-
-  const data = await getBabyStateByWeek(currentWeek);
-
-  res.status(200).json({
-    status: 200,
-    message: "Successfully found baby state",
-    data,
-  });
 };
-export const getMomStateController = async (req, res) => {
-  const { dueDate } = req.user;
 
-  if (!dueDate) {
-    throw createHttpError(400, "Due date is required");
+export const getPrivateWeeksController = async (req, res, next) => {
+  try {
+    const dueDate = req.user.dueDate;
+    const dashboardData = await getPrivateWeeksDashboardData(dueDate);
+
+    const progress = getPregnancyProgress(dueDate);
+
+    res.status(200).json({
+      status: 200,
+      message: "Private dashboard data fetched successfully",
+      data: {
+        ...dashboardData,
+        weeksLeft: progress.weeksLeft,
+      },
+    });
+  } catch (error) {
+    next(error);
   }
+};
 
-  const { currentWeek } = getPregnancyProgress(dueDate);
+export const getBabyStateController = async (req, res, next) => {
+  try {
+    const { weekNumber } = req.params;
+    const data = await getBabyStateByWeek(Number(weekNumber));
+    res.status(200).json({ status: 200, data });
+  } catch (error) { next(error); }
+};
 
-  if (!currentWeek || currentWeek < 1 || currentWeek > 42) {
-    throw createHttpError(400, "Invalid pregnancy week");
-  }
-
-  const data = await getMomStateByWeek(currentWeek);
-
-  res.status(200).json({
-    status: 200,
-    message: "Successfully found mom state",
-    data,
-  });
+export const getMomStateController = async (req, res, next) => {
+  try {
+    const { weekNumber } = req.params;
+    const data = await getMomStateByWeek(Number(weekNumber));
+    res.status(200).json({ status: 200, data });
+  } catch (error) { next(error); }
 };

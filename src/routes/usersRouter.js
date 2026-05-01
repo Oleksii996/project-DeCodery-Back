@@ -1,15 +1,14 @@
-import { Router } from "express";
-import { updateTheme } from "../controllers/users/userThemaController.js";
-import { authThema } from "../middleware/authThema.js";
-import { validateTheme } from "../validations/usersThemaValidator.js";
-import { updateUserAvatar } from "../controllers/users/usersController.js";
 import { Router } from 'express';
+import { updateTheme } from '../controllers/users/userThemaController.js';
+import { authThema } from '../middleware/authThema.js';
+import { validateTheme } from '../validations/usersThemaValidator.js';
+import { updateUserAvatar } from '../controllers/users/usersController.js';
+
 import { celebrate } from 'celebrate';
 
 import { users as controller } from '../controllers/index.js';
 import { updateCurrentUserSchema } from '../validations/index.js';
 
-import { updateUserAvatar } from '../controllers/users/usersController.js';
 import { authenticate } from '../middleware/authenticate.js';
 import { upload } from '../middleware/upload.js';
 

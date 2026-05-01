@@ -1,3 +1,8 @@
+import { Router } from "express";
+import { updateTheme } from "../controllers/users/userThemaController.js";
+import { authThema } from "../middleware/authThema.js";
+import { validateTheme } from "../validations/usersThemaValidator.js";
+import { updateUserAvatar } from "../controllers/users/usersController.js";
 import { Router } from 'express';
 import { celebrate } from 'celebrate';
 
@@ -10,6 +15,7 @@ import { upload } from '../middleware/upload.js';
 
 const usersRouter = Router();
 
+usersRouter.patch('/theme', authThema, validateTheme, updateTheme);
 usersRouter.get('/current', authenticate, controller.getCurrentUser);
 usersRouter.patch(
   '/current',

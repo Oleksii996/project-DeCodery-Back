@@ -30,9 +30,13 @@ export const getPrivateWeekData = async (req, res) => {
 
       baby: {
         weekNumber: baby.weekNumber,
-        size: baby.size,
-        description: baby.description,
-        facts: baby.facts,
+        size: baby.babySize,
+        description: baby.babyDevelopment,
+        image: baby.image, 
+        facts: [
+          baby.babyActivity,
+          baby.interestingFact,
+        ],
       },
 
       mom: {
@@ -41,6 +45,7 @@ export const getPrivateWeekData = async (req, res) => {
         tips: tip ? [tip] : [],
       },
     });
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

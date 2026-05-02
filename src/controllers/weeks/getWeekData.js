@@ -1,10 +1,10 @@
 import { getBabyStateByWeek, getMomStateByWeek } from "../../services/weeks/getWeekState.js";
 
 export const getWeekData = async (req, res) => {
- 
-  const weekNumberNum = 1;
+  const { weekNumber } = req.params;
+  const weekNumberNum = Number(weekNumber);
 
-  const daysToBirth = 273;
+  const daysToBirth = Math.max(0, 280 - weekNumberNum * 7);
 
   try {
     const baby = await getBabyStateByWeek(weekNumberNum);
@@ -14,25 +14,25 @@ export const getWeekData = async (req, res) => {
       weekNumber: weekNumberNum,
       daysToBirth,
 
-      //  BABY
+      // BABY
       baby: {
         weekNumber: baby.weekNumber,
-        size: baby.size,
-        description: baby.description,
-        facts: baby.facts,
+        size: baby.babySize,
+        description: baby.babyDevelopment,
+        facts: [
+          baby.babyActivity,
+          baby.interestingFact,
+        ],
       },
 
-      //  MOM
+      // MOM
       mom: {
         weekNumber: mom.weekNumber,
         description: mom.feelings?.sensationDescr || "Опис відсутній",
-
-        //   беремо з baby_state
-        tips: Array.isArray(baby.momDailyTips)
-          ? baby.momDailyTips
-          : [],
+        tips: baby.momDailyTips || [],
       },
     });
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -6,6 +6,7 @@ import {
   loginUserSchema,
   registerUserSchema,
 } from '../validations/authValidation.js';
+import { authenticate } from '../middleware/authenticate.js';
 
 const authRouter = Router();
 
@@ -18,8 +19,8 @@ authRouter.post(
 // login
 authRouter.post('/login', celebrate(loginUserSchema), controller.loginUser);
 // logout
-authRouter.post('/logout', controller.logoutUser);
+authRouter.post('/logout', authenticate, controller.logoutUser);
 // refresh
-authRouter.post('/refresh', controller.refreshController);
+authRouter.post('/refresh', authenticate, controller.refreshController);
 
 export default authRouter;

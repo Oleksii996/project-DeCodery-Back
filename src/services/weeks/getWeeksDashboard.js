@@ -1,6 +1,6 @@
-import createHttpError from "http-errors";
-import { babyStateModel } from "../../models/baby_state.js";
-import { getDashboardPregnancyProgress } from "../../utils/getDashboardPregnancyProgress.js";
+import createHttpError from 'http-errors';
+import { BabyStateModel } from '../../models/baby_state.js';
+import { getDashboardPregnancyProgress } from '../../utils/getDashboardPregnancyProgress.js';
 
 const LAST_WEEK = 40;
 const DEFAULT_PUBLIC_WEEK = 1;
@@ -13,7 +13,9 @@ export const getPublicWeeksDashboardData = async () => {
   const currentWeek = DEFAULT_PUBLIC_WEEK;
   const daysUntilDueDate = getPublicDaysUntilDueDate();
 
-  const babyState = await babyStateModel.findOne({ weekNumber: currentWeek }).lean();
+  const babyState = await BabyStateModel.findOne({
+    weekNumber: currentWeek,
+  }).lean();
 
   if (!babyState) {
     throw createHttpError(
@@ -38,13 +40,15 @@ export const getPublicWeeksDashboardData = async () => {
 
 export const getPrivateWeeksDashboardData = async (dueDate) => {
   if (!dueDate) {
-    throw createHttpError(400, "Due date is required");
+    throw createHttpError(400, 'Due date is required');
   }
 
   const { currentWeek, daysUntilDueDate, dayIndexInWeek } =
     getDashboardPregnancyProgress(dueDate);
 
-  const babyState = await babyStateModel.findOne({ weekNumber: currentWeek }).lean();
+  const babyState = await BabyStateModel.findOne({
+    weekNumber: currentWeek,
+  }).lean();
 
   if (!babyState) {
     throw createHttpError(

@@ -10,7 +10,7 @@ import { connectMongoDB } from "./db/connectMongoDB.js";
 import { notFoundHandler } from "./middleware/notFoundHandler.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
-// Роутери import
+// Роутери
 import authRouter from "./routes/authRouter.js";
 import diariesRouter from "./routes/diariesRouter.js";
 import tasksRouter from "./routes/tasksRouter.js";
@@ -18,14 +18,14 @@ import usersRouter from "./routes/usersRouter.js";
 import weeksRouter from "./routes/weeksRouter.js";
 
 const PORT = process.env.PORT ?? 5000;
+
 const app = express();
 
-// Глобальні middleware
+// Middleware
 app.use(express.json({ limit: "5mb" }));
 app.use(cors({ methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"] }));
 app.use(helmet());
 app.use(cookieParser());
-await connectMongoDB();
 
 // Роутери
 app.use("/api/auth", authRouter);
@@ -34,21 +34,14 @@ app.use("/api/tasks", tasksRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/weeks", weeksRouter);
 
-// 404 і обробник помилок — наприкінці ланцюжка
+// Обробники помилок
 app.use(notFoundHandler);
 app.use(errors());
 app.use(errorHandler);
 
-const startServer = async () => {
-  try {
-    await connectMongoDB();
+// Запуск сервера
+await connectMongoDB();
 
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  } catch (error) {
-    console.log("Mongo connection error:", error);
-  }
-};
-
-startServer();
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

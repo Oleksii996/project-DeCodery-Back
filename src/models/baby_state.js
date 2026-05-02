@@ -1,6 +1,5 @@
 import { Schema, model } from "mongoose";
 
-
 const babyStateSchema = new Schema(
   {
     weekNumber: { type: Number, required: true, unique: true },
@@ -19,5 +18,4 @@ const babyStateSchema = new Schema(
   },
 );
 
-
-export const babyStateModel = model("baby_state", babyStateSchema);
+export const BabyStateModel = model("baby_state", babyStateSchema);

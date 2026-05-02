@@ -13,8 +13,17 @@ export const getWeekData = async (req, res) => {
     res.json({
       weekNumber: weekNumberNum,
       daysToBirth,
-
-      baby: {
+// baby
+  baby: {
+  weekNumber: baby.weekNumber,
+  size: baby.babySize,
+  description: baby.babyDevelopment,
+  image: baby.image, // додала поле image з baby_state, щоб передавати зображення малюка на фронт
+  facts: [
+    baby.babyActivity,
+    baby.interestingFact,
+  ],
+},   baby: {
         weekNumber: baby.weekNumber,
         size: baby.babySize,
         description: baby.babyDevelopment,

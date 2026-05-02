@@ -14,7 +14,6 @@ export const getWeekData = async (req, res) => {
       weekNumber: weekNumberNum,
       daysToBirth,
 
-      // BABY
       baby: {
         weekNumber: baby.weekNumber,
         size: baby.babySize,
@@ -25,7 +24,6 @@ export const getWeekData = async (req, res) => {
         ],
       },
 
-      // MOM
       mom: {
         weekNumber: mom.weekNumber,
         description: mom.feelings?.sensationDescr || "Опис відсутній",

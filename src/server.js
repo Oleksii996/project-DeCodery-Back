@@ -1,38 +1,38 @@
-import express from "express";
-import cors from "cors";
-import helmet from "helmet";
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
 
-import "dotenv/config";
-import cookieParser from "cookie-parser";
+import 'dotenv/config';
+import cookieParser from 'cookie-parser';
 
-import { errors } from "celebrate";
-import { connectMongoDB } from "./db/connectMongoDB.js";
-import { notFoundHandler } from "./middleware/notFoundHandler.js";
-import { errorHandler } from "./middleware/errorHandler.js";
+import { errors } from 'celebrate';
+import { connectMongoDB } from './db/connectMongoDB.js';
+import { notFoundHandler } from './middleware/notFoundHandler.js';
+import { errorHandler } from './middleware/errorHandler.js';
 
 // Роутери
-import authRouter from "./routes/authRouter.js";
-import diariesRouter from "./routes/diariesRouter.js";
-import tasksRouter from "./routes/tasksRouter.js";
-import usersRouter from "./routes/usersRouter.js";
-import weeksRouter from "./routes/weeksRouter.js";
+import authRouter from './routes/authRouter.js';
+import diariesRouter from './routes/diariesRouter.js';
+import tasksRouter from './routes/tasksRouter.js';
+import usersRouter from './routes/usersRouter.js';
+import weeksRouter from './routes/weeksRouter.js';
 
 const PORT = process.env.PORT ?? 5000;
 
 const app = express();
 
-// Middleware
-app.use(express.json({ limit: "5mb" }));
-app.use(cors({ methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"] }));
+// Глобальні middleware
+app.use(express.json({ limit: '5mb' }));
+app.use(cors({ methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'] }));
 app.use(helmet());
 app.use(cookieParser());
 
 // Роутери
-app.use("/api/auth", authRouter);
-app.use("/api/diaries", diariesRouter);
-app.use("/api/tasks", tasksRouter);
-app.use("/api/users", usersRouter);
-app.use("/api/weeks", weeksRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/diaries', diariesRouter);
+app.use('/api/tasks', tasksRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/weeks', weeksRouter);
 
 // Обробники помилок
 app.use(notFoundHandler);

@@ -27,10 +27,19 @@ export const getWeekData = async (req, res) => {
 
       mom: {
         weekNumber: mom.weekNumber,
-        description: mom.feelings?.sensationDescr || "Опис відсутній",
 
-        
-       tips: Array.isArray(mom.comfortTips) ? mom.comfortTips : [],
+        description:
+          mom.feelings?.sensationDescr || "Опис відсутній",
+
+        //  STATES
+        states: Array.isArray(mom.feelings?.states)
+          ? mom.feelings.states
+          : [],
+
+        // TIPS
+        tips: Array.isArray(mom.comfortTips)
+          ? mom.comfortTips
+          : [],
       },
     });
 

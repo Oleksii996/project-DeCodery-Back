@@ -33,10 +33,19 @@ export const getPrivateWeekData = async (req, res) => {
 
       mom: {
         weekNumber: mom.weekNumber,
-        description: mom.feelings?.sensationDescr || "Опис відсутній",
 
-     
-        tips: mom.comfortTips || [],
+        description:
+          mom.feelings?.sensationDescr || "Опис відсутній",
+
+      
+        states: Array.isArray(mom.feelings?.states)
+          ? mom.feelings.states
+          : [],
+
+       
+        tips: Array.isArray(mom.comfortTips)
+          ? mom.comfortTips
+          : [],
       },
     });
 

@@ -14,26 +14,23 @@ export const getWeekData = async (req, res) => {
       weekNumber: weekNumberNum,
       daysToBirth,
 
-      // BABY
       baby: {
         weekNumber: baby.weekNumber,
         size: baby.babySize,
         description: baby.babyDevelopment,
-
-        //  додала поле image з baby_state, щоб передавати зображення малюка на фронт
         image: baby.image,
-
         facts: [
           baby.babyActivity,
           baby.interestingFact,
         ],
       },
 
-      // MOM
       mom: {
         weekNumber: mom.weekNumber,
         description: mom.feelings?.sensationDescr || "Опис відсутній",
-        tips: baby.momDailyTips || [],
+
+        
+       tips: Array.isArray(mom.comfortTips) ? mom.comfortTips : [],
       },
     });
 

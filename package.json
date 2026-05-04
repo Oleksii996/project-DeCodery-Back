@@ -22,7 +22,7 @@
   "homepage": "https://github.com/Oleksii996/project-DeCodery-Back#readme",
   "dependencies": {
     "bcrypt": "^6.0.0",
-    "celebrate": "^15.0.3",
+    "celebrate": "^12.1.2",
     "cloudinary": "^2.10.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",

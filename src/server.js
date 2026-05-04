@@ -16,6 +16,7 @@ import diariesRouter from './routes/diariesRouter.js';
 import tasksRouter from './routes/tasksRouter.js';
 import usersRouter from './routes/usersRouter.js';
 import weeksRouter from './routes/weeksRouter.js';
+import emotionsRouter from './routes/emotionsRouter.js';
 
 const PORT = process.env.PORT ?? 3000;
 const app = express();
@@ -32,6 +33,7 @@ app.use('/api/diaries', diariesRouter);
 app.use('/api/tasks', tasksRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/weeks', weeksRouter);
+app.use('/api/emotions', emotionsRouter);
 
 // 404 і обробник помилок — наприкінці ланцюжка
 app.use(notFoundHandler);

@@ -10,7 +10,7 @@ import { connectMongoDB } from './db/connectMongoDB.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
-// Роутери import
+// Роутери
 import authRouter from './routes/authRouter.js';
 import diariesRouter from './routes/diariesRouter.js';
 import tasksRouter from './routes/tasksRouter.js';
@@ -18,7 +18,8 @@ import usersRouter from './routes/usersRouter.js';
 import weeksRouter from './routes/weeksRouter.js';
 import emotionsRouter from './routes/emotionsRouter.js';
 
-const PORT = process.env.PORT ?? 3000;
+const PORT = process.env.PORT ?? 5000;
+
 const app = express();
 
 // Глобальні middleware
@@ -35,12 +36,14 @@ app.use('/api/users', usersRouter);
 app.use('/api/weeks', weeksRouter);
 app.use('/api/emotions', emotionsRouter);
 
-// 404 і обробник помилок — наприкінці ланцюжка
+// Обробники помилок
 app.use(notFoundHandler);
 app.use(errors());
 app.use(errorHandler);
 
+// Запуск сервера
 await connectMongoDB();
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

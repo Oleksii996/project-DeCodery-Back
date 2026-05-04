@@ -14,16 +14,16 @@ import {
 
 const weeksRouter = Router();
 
-// 🔹 нові роуті з main
+// 🔹 main (НЕ ЧІПАЄМО)
 weeksRouter.get("/", getPublicWeeksController);
 weeksRouter.get("/me", authenticate, getPrivateWeeksController);
 
-// 🔹 твої роуті (ВАЖЛИВІ для фронта)
-weeksRouter.get("/:weekNumber", getWeekData);
-weeksRouter.get("/private/:weekNumber", authenticate, getPrivateWeekData);
-
-// 🔹 інші
+// 🔹 існуючі роуті
 weeksRouter.get("/baby", authenticate, getBabyStateController);
 weeksRouter.get("/mom", authenticate, getMomStateController);
+
+// 🔹 нові (твій функціонал)
+weeksRouter.get("/private/:weekNumber", authenticate, getPrivateWeekData);
+weeksRouter.get("/:weekNumber", getWeekData);
 
 export default weeksRouter;

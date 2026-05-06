@@ -82,17 +82,22 @@ export const loginUserSchema = {
 export const updateCurrentUserSchema = {
   [Segments.BODY]: Joi.object({
     name: Joi.string().max(32).messages({
-      "string.base": "Name must be a string",
-      "string.max": "Name must be at most 32 characters long",
+      'string.base': 'Name must be a string',
+      'string.max': 'Name must be at most 32 characters long',
     }),
-    gender: Joi.string().valid("boy", "girl", null).messages({
-      "any.only": "Gender must be one of: boy, girl, null",
+    gender: Joi.string().valid('boy', 'girl', null).messages({
+      'any.only': 'Gender must be one of: boy, girl, null',
+    }),
+    email: Joi.string().email().max(64).messages({
+      'string.base': 'Email must be a string',
+      'string.email': 'Email must be a valid email',
+      'string.max': 'Email must be at most 64 characters long',
     }),
     dueDate: Joi.string().custom(validateDueDate).messages({
-      "string.base": "Due date must be a string",
-      "any.invalid": "Due date must be in format YYYY-MM-DD",
-      "date.range":
-        "Due date must be between current date + 1 week and current date + 40 weeks",
+      'string.base': 'Due date must be a string',
+      'any.invalid': 'Due date must be in format YYYY-MM-DD',
+      'date.range':
+        'Due date must be between current date + 1 week and current date + 40 weeks',
     }),
   }).min(1),
 };

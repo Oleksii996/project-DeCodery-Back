@@ -13,6 +13,8 @@ import {
   updateDiary,
   deleteDiary,
 } from './diaries/diariesControllers.js';
+import { get } from 'mongoose';
+import { getMeController } from './auth/getMeController.js';
 
 export const diary = {
   getAllDiaries,
@@ -26,6 +28,7 @@ export const auth = {
   loginUser,
   logoutUser,
   refreshController,
+  getMeController,
 };
 
 export const users = {

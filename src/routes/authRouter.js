@@ -22,5 +22,6 @@ authRouter.post('/login', celebrate(loginUserSchema), controller.loginUser);
 authRouter.post('/logout', authenticate, controller.logoutUser);
 // refresh
 authRouter.post('/refresh', authenticate, controller.refreshController);
+authRouter.get('/me', authenticate, controller.getMeController);
 
 export default authRouter;
